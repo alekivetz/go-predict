@@ -63,6 +63,7 @@ def safe_segment_name(label) -> str:
          .replace("<", "lt").replace(">", "gt")
          .replace("-", "_").replace("/", "_")
          .replace("=", "")
+         .replace(".", "_") # Avoid invalid MLflow run names
     )
 
 
@@ -179,7 +180,7 @@ def train_and_save_per_segment(df_train: pd.DataFrame,
             fpath = os.path.join(model_dir, fname)
             joblib.dump(model, fpath)
             mlflow.log_artifact(fpath)
-            mlflow.sklearn.log_model(model, artifact_path=f"models/{seg_name}")
+            mlflow.sklearn.log_model(model, name=f'rf_model_{seg_name}')
 
             print(f"✅ Segment '{segment}': trained on {len(seg_df)} rows "
                   f"(r2={r2:.3f}, rmse={rmse:.3f}, mae={mae:.3f}) → {fpath}")

@@ -462,6 +462,16 @@ def save_preprocessed_data(
     saved_paths['data'] = data_path
     logger.info(f"Preprocessed GoPredict data saved to: {data_path}")
 
+    # Save CSV version for training
+    csv_path = os.path.join(output_dir, 'Go_auto_train_data.csv')
+    combined_df = pd.concat(
+        [data_dict['X_train'], data_dict['y_train'].rename('days_on_market')],
+        axis=1
+    )
+    combined_df.to_csv(csv_path, index=False)
+    saved_paths['csv'] = csv_path
+    logger.info(f'Preprocessed CSV exported to: {csv_path}')
+
     return saved_paths
 
 
