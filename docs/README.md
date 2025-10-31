@@ -53,7 +53,8 @@ This project follows a standard machine learning repository layout. **All comman
     ├── data/                # Stores datasets (raw, processed)
     │   ├── raw/
     │   ├── processed/
-    ├── models/              # Saved or checkpointed model files (.joblib)
+    ├── models/              # Saved or checkpointed model files
+    ├── configs/             # Configuration YAMLs for pipeline components
     ├── notebooks/           # Jupyter notebooks for exploration/demos
     ├── src/
     │   ├── train.py         # Script to train your model
@@ -61,7 +62,7 @@ This project follows a standard machine learning repository layout. **All comman
     │   ├── preprocess.py    # Data preprocessing logic
     │   ├── evaluate.py      # Model evaluation script
     ├── docs/                # Documentation (README)
-    ├── requirements.txt
+    ├── requirements.txt     # Project dependencies
     └── .gitignore           
 ```
 
