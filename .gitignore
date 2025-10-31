@@ -1,0 +1,51 @@
+# .gitignore
+
+# ------------------------------------
+# 1. Generated Data and Predictions
+# ------------------------------------
+# Ignore all processed data files
+data/processed/
+# Ignore raw data (it can be large or proprietary)
+data/raw/
+
+# ------------------------------------
+# 2. Machine Learning Artifacts
+# ------------------------------------
+# Ignore all trained model files
+models/
+
+# ------------------------------------
+# 3. Environment/Dependency Management
+# ------------------------------------
+# Virtual environment folders
+.venv
+venv/
+.env
+env/
+ENV/
+
+# ------------------------------------
+# 4. Python Bytecode, Caching, and IDE Files
+# ------------------------------------
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.html
+
+# MyPy
+.mypy_cache/
+
+# ------------------------------------
+# 5. OS and Editor Files
+# ------------------------------------
+# macOS files
+.DS_Store
+# Windows files
+Thumbs.db
+# Common editor temporary files
+*.swp
+*~

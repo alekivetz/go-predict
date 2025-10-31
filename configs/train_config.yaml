@@ -1,0 +1,65 @@
+# ============================================================
+# Configuration file for model training script (train.py)
+# 
+# This file defines:
+#   - file paths for input data and model outputs
+#   - selected features used for training
+#   - segmentation settings for MSRP groups
+#   - model hyperparameters for RandomForestRegressor
+# 
+# Keeping configurations here makes your project modular,
+# flexible, and reproducible.
+# ============================================================
+
+
+paths:
+  # Folder containing the processed training dataset
+  data_dir: data/processed
+
+  # Name of the training CSV file
+  train_filename: Go_auto_train_data.csv
+
+  # Folder where trained models will be saved
+  model_dir: models
+
+
+features:
+  # List of 10 selected input features used during model training
+  selected:
+    - month_listed
+    - number_price_changes
+    - discount
+    - model
+    - mileage
+    - price_imputed
+    - make
+    - msrp
+    - years_on_market
+    - wheelbase_from_vin
+
+
+segmentation:
+  # MSRP segmentation bins (use .inf for infinity)
+  # These bins divide the data into price segments
+  msrp_bins: [0, 33650, 61500, .inf]
+
+  # Labels for the corresponding MSRP bins
+  msrp_labels:
+    - "Low (<33.6k)"
+    - "Medium (33.6k-61.5k)"
+    - "High (>61.5k)"
+
+  # Whether segmentation bins are right-closed
+  # false = left-closed (same as right=False in pandas.cut)
+  right_closed: false
+
+
+model:
+  # Best hyperparameters for RandomForestRegressor
+  best_params:
+    n_estimators: 350         # Number of trees in the forest
+    min_samples_split: 5      # Minimum samples required to split a node
+    min_samples_leaf: 2       # Minimum samples required at a leaf node
+    max_features: 0.5         # Fraction of features considered per split
+    max_depth: 35             # Maximum depth of the tree
+    random_state: 42          # Random seed for reproducibility

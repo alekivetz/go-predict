@@ -1,0 +1,68 @@
+# Configuration file for preprocess script
+# Stores all parameters and file paths used by preprocess.py
+
+# Data directories
+data:
+  raw_path: data/raw/
+  processed_path: data/processed/
+
+# Train test split and seed value for reproducibility
+split:
+  test_size: 0.2
+  random_state: 42
+
+# Dataset features
+features:
+
+  categorical:
+    - make
+    - model
+    - wheelbase_from_vin
+    
+  numerical:
+    - mileage
+    - price
+    - msrp
+    - number_price_changes
+    
+  target: days_on_market
+  
+  drop:
+    - listing_id
+    - listing_heading
+    - listing_type
+    - listing_url
+    - listing_first_date
+    - dealer_id
+    - dealer_name
+    - dealer_street
+    - dealer_city
+    - dealer_province
+    - dealer_postal_code
+    - dealer_url
+    - dealer_email
+    - dealer_phone
+    - dealer_type
+    - stock_type
+    - vehicle_id
+    - vin
+    - uvc
+    - model_year
+    - series
+    - style
+    - certified
+    - has_leather
+    - has_navigation
+    - exterior_color
+    - exterior_color_category
+    - interior_color
+    - interior_color_category
+    - price_analysis
+    - drivetrain_from_vin
+    - engine_from_vin
+    - transmission_from_vin
+    - fuel_type_from_vin
+    - price_history_delimited
+    - distance_to_dealer
+    - location_score
+    - listing_dropoff_date

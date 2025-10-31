@@ -1,0 +1,44 @@
+# Configuration file for prediction script
+# Stores all parameters and file paths used by predict.py
+
+paths:
+  # Folder containing processed test data
+  data_dir: data/processed
+  
+  # Test dataset filename
+  test_filename: Go_auto_test_data.csv
+  
+  # Folder containing the trained models
+  model_dir: models
+  
+  # Output CSV file for predictions
+  predictions_filename: predictions.csv
+
+
+features:
+  # List of 10 selected features used for prediction
+  selected:
+    - month_listed
+    - number_price_changes
+    - discount
+    - model
+    - mileage
+    - price_imputed
+    - make
+    - msrp
+    - years_on_market
+    - wheelbase_from_vin
+
+
+segmentation:
+  # MSRP segmentation bins (use .inf to represent infinity in YAML)
+  msrp_bins: [0, 33650, 61500, .inf]
+  
+  # MSRP segmentation labels for the bins above
+  msrp_labels:
+    - "Low (<33.6k)"
+    - "Medium (33.6k-61.5k)"
+    - "High (>61.5k)"
+  
+  # Whether the segmentation bins are right-closed (False = left-closed)
+  right_closed: false
