@@ -1,0 +1,49 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# === Virtual Environment ===
+.venv/
+env/
+venv/
+
+# === MLflow & Experiment Artifacts ===
+.mlruns/
+mlruns/
+
+# === Logs & Temp Files ===
+logs/
+*.log
+
+# === Data & Model Files ===
+data/
+models/
+*.csv
+*.npy
+*.parquet
+*.pkl
+
+# === Cloud / Build Artifacts ===
+cloudbuild_output/
+.gcloudignore
+
+# === Docker & Container Cache ===
+*.pid
+*.tar
+*.bak
+*.swp
+
+# === VSCode & macOS ===
+.vscode/
+.DS_Store
+
+# === Monitoring Tools ===
+grafana/
+prometheus/
+
+# === System or Temp Files ===
+*.tmp
+*.old
