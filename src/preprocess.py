@@ -24,13 +24,12 @@ import argparse
 import logging
 import os
 from pathlib import Path    
-from typing import Optional, Tuple
+from typing import Tuple
 
 # --- Third-party Libraries ---
 import joblib
 import numpy as np
 import pandas as pd
-import yaml
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
