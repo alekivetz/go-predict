@@ -30,9 +30,7 @@ from typing import Tuple
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
 
 # --- Internal Imports ---
 from src.utils.helper_functions import load_yaml_config
