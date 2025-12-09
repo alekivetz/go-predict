@@ -86,6 +86,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     logger.info(f'Data types converted and duplicates removed. Shape: {df.shape}')
     return df
 
+
 def impute_wheelbase_outliers(df: pd.DataFrame) -> pd.DataFrame:    
     """
     Imputes outliers and zero values in the wheelbase column with the median of the entire dataset.
