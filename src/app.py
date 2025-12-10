@@ -110,9 +110,8 @@ def load_models_from_gcs():
     GCS_PATH = "gopredict"
 
     try:
-        creds, project = google.auth.default()
-        logger.info(f"Authenticated with project: {project}")
-        client = storage.Client(credentials=creds)
+        client = storage.Client.from_service_account_json('/secrets/gcp.json')
+        logger.info('Authenticated with GCP with service account JSON.')
     except DefaultCredentialsError as e:
         logger.error(f"GCP credentials not found: {e}")
         raise

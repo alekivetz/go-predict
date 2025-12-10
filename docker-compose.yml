@@ -10,6 +10,9 @@ services:
       - ml-network
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5001
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/gcp.json  
+    volumes:
+      - ./secrets/gcp.json:/secrets/gcp.json:ro   
     depends_on:
       - mlflow
 

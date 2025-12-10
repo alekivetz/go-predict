@@ -29,6 +29,8 @@ models/
 # === Cloud / Build Artifacts ===
 cloudbuild_output/
 .gcloudignore
+secrets/
+.*json
 
 # === Docker & Container Cache ===
 *.pid
