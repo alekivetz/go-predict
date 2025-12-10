@@ -1,0 +1,41 @@
+# ============================================================
+# GoPredict ML Application Image
+# ============================================================
+
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files
+COPY src/ ./src/
+# COPY models/ ./models/
+COPY configs/ ./configs/
+# COPY data/processed/Go_auto_train_data.csv ./data/processed/
+# COPY data/processed/preprocessing_pipeline.pkl ./data/processed/preprocessing_pipeline.pkl
+
+# Expose the port your Flask API will run on
+# EXPOSE 5000
+
+# Environment variable for logging
+ENV LOG_DIR=/app/logs
+
+# Create log directory
+RUN mkdir -p /app/logs
+
+# Google Cloud Changes
+# Use PORT provided by Cloud Run
+# ENV PORT=8080
+# ENV LOG_DIR=/app/logs
+# RUN mkdir -p /app/logs
+
+# Expose dynamic port (for Cloud Run)
+EXPOSE 8080
+
+# Default command
+CMD ["python", "-m", "src.app"]

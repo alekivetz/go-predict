@@ -1,0 +1,21 @@
+# ============================================================
+# GoPredict MLflow Tracking Server Image
+# ============================================================
+
+FROM python:3.11-slim
+
+WORKDIR /mlflow
+
+RUN pip install --no-cache-dir mlflow pymysql
+
+# Expose MLflow default port
+# EXPOSE 5001
+
+# Command to run MLflow server
+# CMD ["mlflow", "server", "--backend-store-uri", "sqlite:///mlflow.db", "--default-artifact-root", "mlartifacts", "--host", "0.0.0.0", "--port", "5001"]
+
+# Expose default Cloud Run port (8080)
+EXPOSE 8080
+
+# Use the Cloud Run PORT variable (defaults to 8080 if not set)
+CMD ["sh", "-c", "mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root mlartifacts --host 0.0.0.0 --port ${PORT:-8080}"]

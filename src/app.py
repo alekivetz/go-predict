@@ -94,25 +94,88 @@ swagger = Swagger(app, template={
 # =============== 4. LOAD MODELS AND ARTIFACTS ===============
 # ============================================================
 
-# All files are loaded once when the API starts
-try: 
-    # Load pipeline - optional as pipelines are saved into models
-    pipeline = joblib.load('data/processed/preprocessing_pipeline.pkl')
+# Global placeholders for models and pipeline
+models = {}
+pipeline = None
+model_v1 = None
+model_v2 = None
 
-    models = {
-        'Low': joblib.load('models/Low_lt33_6k_model.joblib'),
-        'Medium': joblib.load('models/Medium_33_6k_61_5k_model.joblib'),
-        'High': joblib.load('models/High_gt61_5k_model.joblib'),
+def load_models_from_gcs():
+    """Downloads models and pipeline from GCS on first request."""
+    from google.cloud import storage
+    from google.auth.exceptions import DefaultCredentialsError
+    import tempfile, joblib, os, google.auth
+
+    BUCKET_NAME = "go-predict-artifacts-go-predict"
+    GCS_PATH = "gopredict"
+
+    try:
+        creds, project = google.auth.default()
+        logger.info(f"Authenticated with project: {project}")
+        client = storage.Client(credentials=creds)
+    except DefaultCredentialsError as e:
+        logger.error(f"GCP credentials not found: {e}")
+        raise
+
+    tmp_dir = tempfile.mkdtemp()
+    logger.info(f"📁 Temporary folder created at {tmp_dir}")
+
+    # -------------------------------------------------------------------
+    # FIXED DOWNLOAD FUNCTION
+    # -------------------------------------------------------------------
+    def download(blob_name, local_path):
+        """Download a file from GCS to a local path with error handling."""
+        try:
+            bucket = client.bucket(BUCKET_NAME)
+            blob = bucket.blob(blob_name)
+            blob.download_to_filename(local_path, timeout=60)
+            logger.info(f"✅ Downloaded {blob_name} → {local_path}")
+        except Exception as e:
+            logger.error(f"❌ Failed to download {blob_name}: {e}", exc_info=True)
+            raise
+
+    # -------------------------------------------------------------------
+    # Download pipeline
+    # -------------------------------------------------------------------
+    local_pipeline = os.path.join(tmp_dir, "preprocessing_pipeline.pkl")
+    download(f"{GCS_PATH}/data/processed/preprocessing_pipeline.pkl", local_pipeline)
+    pipeline = joblib.load(local_pipeline)
+
+    # -------------------------------------------------------------------
+    # Download models
+    # -------------------------------------------------------------------
+    models = {}
+    model_blobs = {
+        "Low": f"{GCS_PATH}/models/Low_lt33_6k_model.joblib",
+        "Medium": f"{GCS_PATH}/models/Medium_33_6k_61_5k_model.joblib",
+        "High": f"{GCS_PATH}/models/High_gt61_5k_model.joblib",
     }
 
-    # Versioned models for API versioning
-    model_v1 = models['Medium']
-    model_v2 = models['High']
+    for seg, blob_path in model_blobs.items():
+        try:
+            local_model = os.path.join(tmp_dir, f"{seg}.joblib")
+            logger.info(f"Downloading {seg} model from GCS...")
+            download(blob_path, local_model)
+            models[seg] = joblib.load(local_model)
+            logger.info(f"✅ Loaded {seg} model from GCS.")
+        except Exception as e:
+            logger.error(f"❌ Failed to load {seg} model from GCS: {e}", exc_info=True)
 
-    logger.info('All segment models and pipeline loaded successfully.')
-except FileNotFoundError as e:
-    logger.error(f'Failed to load models and pipeline: {e}')
-    pipeline, models = None, {}
+    logger.info(f"✅ All models and pipeline successfully loaded from GCS ({len(models)} models).")
+    return pipeline, models
+
+
+def preload_models():
+    global pipeline, models, model_v1, model_v2
+    logger.info("Pre-loading models from GCS at startup...")
+    try:
+        pipeline, models = load_models_from_gcs()
+        model_v1 = models["High"]
+        model_v2 = models["Medium"]
+        logger.info("Models successfully loaded from GCS.")
+    except Exception as e:
+        logger.error(f"Startup model load failed: {e}")
+        pipeline, models = None, {}
 
 # ============================================================
 # =============== 5. FEATURE DEFINITIONS =====================
@@ -408,7 +471,7 @@ def predict():
         description: Models or pipeline not loaded
     """
 
-    # Ensure models are loaded (pipeline is optional but checked)
+    # Ensure models were loaded at startup
     if not models or pipeline is None:
         return jsonify(error='Models or pipeline not loaded.'), 500
     
@@ -481,6 +544,10 @@ def predict():
 # ============================================================
 
 if __name__ == '__main__':
+    # Preload models from GCS
+    logger.info("Preloading models from GCS...")
+    preload_models()
+
     monitor_thread = threading.Thread(target=monitor_system, daemon=True)
     monitor_thread.start()
 

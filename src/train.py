@@ -241,7 +241,7 @@ def train_and_save_per_segment(
             if args.save:
                 # Create a file path
                 local_save_path = os.path.join('models', f'{seg_name}_model.joblib')
-                joblib.dump(pipeline, local_save_path)
+                joblib.dump(pipeline, local_save_path, compress=('xz', 3))
                 logger.info(f'Local model saved to {local_save_path}')
             
             # Upload the folder to this run under Artifacts/model/
@@ -340,7 +340,7 @@ def main():
         # Save preprocessing pipeline
         os.makedirs('data/processed', exist_ok=True)
         pipeline_path = 'data/processed/preprocessing_pipeline.pkl'
-        joblib.dump(preprocess, pipeline_path)
+        joblib.dump(preprocess, pipeline_path, compress=('xz', 3))
         logger.info(f"Saved preprocessing pipeline to {pipeline_path}")
 
         try:
