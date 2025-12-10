@@ -45,4 +45,8 @@ prometheus-client==0.21.0
 prometheus-flask-exporter==0.23.1
 psutil==6.1.0
 
+
+# ============================================================
+# 8. Cloud Infrastructure
+# ============================================================
 google-cloud-storage
