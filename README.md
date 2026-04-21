@@ -116,15 +116,19 @@ Examines the relationship between mileage and market performance across four tie
 ## Key Findings
 
 **Newer Isn't Always Faster**
+
 0-1 year vehicles have the lowest sell-through rate at 64%. Older inventory moves more reliably, with 10+ year vehicles closing at 76%.
 
 **Low Mileage, Long Wait**
+
 Sub-25K km vehicles sit the longest, with 31% aging past 60 days and a sell-through rate of just 64%.
 
 **Luxury Takes Its Time**
+
 Premium and Luxury segments average 64 to 68 days on market and are the least likely to sell within 30 days.
 
 **Mileage Ceiling Matters Less Than You'd Think**
+
 Vehicles with 150K+ km match mid-mileage sell-through rates at 72%, suggesting buyers are less deterred by high mileage than expected.
 
 ---
