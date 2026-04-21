@@ -49,3 +49,6 @@ prometheus/
 # === System or Temp Files ===
 *.tmp
 *.old
+
+# === Streamlit ===
+streamlit/secrets.toml
