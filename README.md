@@ -95,7 +95,7 @@ Note: The Streamlit app uses a simplified feature set limited to inputs a user c
 
 ## Dashboard
 
-The Power BI dashboard analyzes 91,171 sold vehicle listings from May 2023 to July 2024 across three dimensions: vehicle age, price tier, and mileage. Each page includes sold listing volume, days-on-market comparison (median and average), percentage sold over 60 days, sell-through rate, a summary table, and interactive filtering by make. Custom tooltip pages show top 5 brands by sell-through rate on hover.
+The Power BI dashboard analyzes 91,171 sold vehicle listings from May 2023 to July 2024 across three dimensions: vehicle age, price tier, and mileage. Each page includes sold listing volume, days-on-market comparison (median and average), percentage sold over 60 days, sell-through rate, a summary table, and interactive filtering by make. Custom tooltip pages show top 5 brands by metric rate on hover.
 
 Screenshots are available in [`docs/screenshots/`](./docs/screenshots/).
 
