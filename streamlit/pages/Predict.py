@@ -199,12 +199,15 @@ if 'models' in st.session_state:
         }
 
     with col8:
-        generate_scatter_plot(
-            st.session_state.actual_all,
-            st.session_state.df_test,
-            st.session_state.y_pred_test,
-            filters
-        )        
+        if len(st.session_state.actual_all) > 0:
+            generate_scatter_plot(
+                st.session_state.actual_all,
+                st.session_state.df_test,
+                st.session_state.y_pred_test,
+                filters
+            )
+        else:
+            st.info('Train the model to view the prediction plot.')     
 
 else:
     st.error('Please train the model first.')

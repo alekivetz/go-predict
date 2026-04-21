@@ -27,7 +27,8 @@ def generate_scatter_plot(actual_all, df_test, y_pred_test, filters=None):
 
     # Begin graph
     plt.figure(figsize=(8, 8))
-    plt.plot([0, max(actual_all)], [0, max(actual_all)], color='red', linestyle='--', label='Perfect Prediction (y=x)')
+    if len(actual_all) > 0:
+        plt.plot([0, max(actual_all)], [0, max(actual_all)], color='red', linestyle='--', label='Perfect Prediction (y=x)')
     plt.xlabel('Actual Days on Market')
     plt.ylabel('Predicted Days on Market')
 
